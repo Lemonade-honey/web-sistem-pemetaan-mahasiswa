@@ -13,7 +13,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $userFiles = UserFile::where('id', auth()->user()->id)->paginate();
+        $userFiles = UserFile::where('user_id', auth()->user()->id)->paginate(10);
 
         return view('pages.dashboard.index', compact('userFiles'));
     }
