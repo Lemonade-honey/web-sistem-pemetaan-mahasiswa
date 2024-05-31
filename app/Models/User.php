@@ -44,4 +44,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Relation
+    public function manyUserFiles()
+    {
+        return $this->hasMany(UserFile::class);
+    }
 }

@@ -22,4 +22,6 @@ Route::middleware('auth')->group(function(){
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::post('/user-file', [DashboardController::class, 'userFilePost'])->name('user-file.post');
 });

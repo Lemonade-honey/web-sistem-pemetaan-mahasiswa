@@ -38,7 +38,7 @@
                 <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div class="relative p-4 w-full max-w-2xl max-h-full">
                         <!-- Modal content -->
-                        <form action="#" method="POST" class="relative bg-white rounded-lg shadow">
+                        <form action="{{ route('user-file.post') }}" method="POST" class="relative bg-white rounded-lg shadow">
                             <!-- Modal header -->
                             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                                 <div class="">
@@ -92,6 +92,8 @@
         </div>
         {{-- pop over end --}}
 
+        @include('includes.alert')
+
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                 <thead class="text-xs text-gray-700 uppercase bg-golden-300">
@@ -117,7 +119,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    @forelse ($userFiles as $key => $item)
+                    <tr class="bg-white border-b hover:bg-gray-100">
+                        <td class="px-6 py-4">
+                            {{ ($userFiles->currentPage() - 1) * $userFiles->perPage() + $key + 1 }}
+                        </td>
+                        <th scope="row" class="px-6 py-4 whitespace-nowrap">
+                            <a href="/storage/{{ $item->path }}" target="__blank" class="text-golden-700 hover:underline">{{ $item->file }}</a>
+                        </th>
+                        <td class="px-6 py-4">
+                            
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $item->type }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $item->created_at->diffForHumans() }}
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <a href="#" class="font-medium text-red-600 hover:underline">Delete</a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="7" class="px-6 py-4 text-center text-gray-900 font-medium text-md">Tidak Ditemukan</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
