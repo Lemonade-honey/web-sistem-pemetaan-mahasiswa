@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->text("path");
             $table->text("file");
-            $table->text("score")->nullable();
+            $table->text("scores")->nullable();
+            $table->text("labels")->nullable();
             $table->string("type");
             $table->timestamps();
         });

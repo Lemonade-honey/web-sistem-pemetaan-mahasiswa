@@ -18,30 +18,30 @@ class DashboardController extends Controller
         return view('pages.dashboard.index', compact('userFiles'));
     }
 
-    public function userFilePost(Request $request)
+    public function userFilePost(Request $request, \App\Services\Interfaces\ClassificationService $classificationService)
     {
         $request->validate([
             'file' => 'required',
             'type' => 'required'
         ]);
 
-        $temp = FileTemp::where('folder', $request->file)->first();
+        $filePath = str_replace('"', '', $request->file);
 
-        abort_if(!$temp, 408);
+        $prediksi = collect($classificationService->classificationDokumen($filePath))->toArray();
+
+        $probabilitas = collect($prediksi['data']->probabilitas)->toArray();
+
+        $labels = $classificationService->labelCalculate($probabilitas);
+
 
         try {
-            $move = Storage::copy("public/temp/" . $temp->folder. "/" . $temp->file, "public/$request->type/" . $temp->file);
-            
-            if($move){
-                Storage::deleteDirectory("public/temp/" . $temp->folder);
-
-                $temp->delete();
-            }
 
             $userFile = UserFile::create([
                 "user_id" => auth()->user()->id,
-                "path" => "$request->type/" . $temp->file,
-                "file" => $temp->file,
+                "path" => $filePath,
+                "file" => substr($filePath, 8),
+                "scores" => $probabilitas,
+                "labels" => $labels,
                 "type" => $request->type
             ]);
 
@@ -55,7 +55,8 @@ class DashboardController extends Controller
         } catch (\Throwable $th) {
             Log::error("file baru gagal ditambahkan", [
                 "class" => get_class(),
-                "user" => auth()->user()
+                "user" => auth()->user(),
+                "massage" => $th->getMessage()
             ]);
 
             return back()->withErrors(['gagal dalam menambahkan data baru. coba lagi nanti !', $th->getCode()]);

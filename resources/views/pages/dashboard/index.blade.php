@@ -105,7 +105,10 @@
                             File
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Score <span data-popover-target="popover-default"><i class="fa-regular fa-circle-question"></i></span>
+                            Scores <span data-popover-target="popover-default"><i class="fa-regular fa-circle-question"></i></span>
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Labels
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Type
@@ -125,12 +128,22 @@
                             {{ ($userFiles->currentPage() - 1) * $userFiles->perPage() + $key + 1 }}
                         </td>
                         <th scope="row" class="px-6 py-4 whitespace-nowrap">
-                            <a href="/storage/{{ $item->path }}" target="__blank" class="text-golden-700 hover:underline">{{ $item->file }}</a>
+                            <a href="{{ env('CLASSIFICATION_CONNECTION') . 'library?folder_path=' . $item->path }}" target="__blank" class="text-golden-700 hover:underline">{{ $item->file }}</a>
                         </th>
                         <td class="px-6 py-4">
-                            
+                            @foreach ($item->scores as $key => $score)
+                                <div class="flex justify-between">
+                                    <div class="{{ $score > 50 ? 'font-medium' : '' }} capitalize">{{ $key }}</div>
+                                    <div class=""> {{ $score }}</div>
+                                </div>
+                            @endforeach
                         </td>
                         <td class="px-6 py-4">
+                            @foreach ($item->labels as $label)
+                                <div class="font-medium capitalize">{{ $label }}</div>
+                            @endforeach
+                        </td>
+                        <td class="px-6 py-4 capitalize">
                             {{ $item->type }}
                         </td>
                         <td class="px-6 py-4">
@@ -181,16 +194,10 @@
 
         server: {
             process: {
-                url: "{{ route('api.file-upload') }}",
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                }
+                url: "{{ env('CLASSIFICATION_CONNECTION') . 'upload-file' }}",
             },
             revert: {
-                url: "{{ route('api.file-revert') }}",
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                }
+                url: "{{ env('CLASSIFICATION_CONNECTION') . 'delete-file' }}",
             }
         },
     });
