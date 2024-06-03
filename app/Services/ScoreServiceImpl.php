@@ -37,16 +37,18 @@ class ScoreServiceImpl implements ScoreService
 
     public function syncroniceScoreUser(): void
     {
-        $labelsScore = self::scoresLabelsUser();
+        $labelsScore = $this->scoresLabelsUser();
 
         // save data to db
-        dd($labelsScore);
+        $userProfile = \App\Models\UserProfile::where('user_id', auth()->user()->id)->first();
+        $userProfile->statistik_scores = $labelsScore;
+        $userProfile->save();
     }
 
     /**
      * Mengisi collection key yang tidak ada, sesuai dengan `requiredLabels`
      */
-    private function fillCollectionKey(\Illuminate\Support\Collection $collection, array $requiredLabels): \Illuminate\Support\Collection
+    private static function fillCollectionKey(\Illuminate\Support\Collection $collection, array $requiredLabels): \Illuminate\Support\Collection
     {
         foreach($requiredLabels as $label)
         {

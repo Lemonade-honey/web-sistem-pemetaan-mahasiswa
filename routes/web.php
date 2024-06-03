@@ -25,3 +25,7 @@ Route::middleware('auth')->group(function(){
 
     Route::post('/user-file', [DashboardController::class, 'userFilePost'])->name('user-file.post');
 });
+
+
+// test route
+Route::get('/test', [DashboardController::class, 'test']);

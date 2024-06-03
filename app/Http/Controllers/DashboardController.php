@@ -18,7 +18,7 @@ class DashboardController extends Controller
         return view('pages.dashboard.index', compact('userFiles'));
     }
 
-    public function userFilePost(Request $request, \App\Services\Interfaces\ClassificationService $classificationService)
+    public function userFilePost(Request $request, \App\Services\Interfaces\ClassificationService $classificationService, \App\Services\Interfaces\ScoreService $scoreService)
     {
         $request->validate([
             'file' => 'required',
@@ -45,6 +45,9 @@ class DashboardController extends Controller
                 "type" => $request->type
             ]);
 
+            // sync score to profile
+            $scoreService->syncroniceScoreUser();
+
             Log::info("berhasil menambahkan file baru", [
                 "data" => $userFile,
                 "user" => auth()->user()
@@ -61,5 +64,11 @@ class DashboardController extends Controller
 
             return back()->withErrors(['gagal dalam menambahkan data baru. coba lagi nanti !', $th->getCode()]);
         }
+    }
+
+    // test route
+    public function test(\App\Services\Interfaces\ScoreService $scoreService)
+    {
+        $scoreService->syncroniceScoreUser();
     }
 }
