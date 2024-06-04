@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FileTemp;
 use App\Models\User;
 use App\Models\UserFile;
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -14,8 +15,9 @@ class DashboardController extends Controller
     public function index()
     {
         $userFiles = UserFile::where('user_id', auth()->user()->id)->paginate(10);
+        $userProfile = UserProfile::where('user_id', auth()->user()->id)->first();
 
-        return view('pages.dashboard.index', compact('userFiles'));
+        return view('pages.dashboard.index', compact('userFiles', 'userProfile'));
     }
 
     public function userFilePost(Request $request, \App\Services\Interfaces\ClassificationService $classificationService, \App\Services\Interfaces\ScoreService $scoreService)
@@ -36,6 +38,8 @@ class DashboardController extends Controller
 
         try {
 
+            \Illuminate\Support\Facades\DB::beginTransaction();
+
             $userFile = UserFile::create([
                 "user_id" => auth()->user()->id,
                 "path" => $filePath,
@@ -48,6 +52,8 @@ class DashboardController extends Controller
             // sync score to profile
             $scoreService->syncroniceScoreUser();
 
+            \Illuminate\Support\Facades\DB::commit();
+
             Log::info("berhasil menambahkan file baru", [
                 "data" => $userFile,
                 "user" => auth()->user()
@@ -56,6 +62,9 @@ class DashboardController extends Controller
             return back()->with('success', 'berhasil menambahkan data baru');
 
         } catch (\Throwable $th) {
+
+            \Illuminate\Support\Facades\DB::rollBack();
+
             Log::error("file baru gagal ditambahkan", [
                 "class" => get_class(),
                 "user" => auth()->user(),

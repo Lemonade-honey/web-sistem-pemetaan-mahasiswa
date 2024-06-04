@@ -20,6 +20,8 @@
                     <div class="mb-4">
                         <h2 class="text-xl font-medium text-golden-600">Statistik</h2>
                     </div>
+
+                    <div class="" id="chart"></div>
                 </div>
             </div>
         </div>
@@ -203,5 +205,31 @@
             }
         },
     });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+var options = 
+{
+    series: [{
+        name: 'Avg Score',
+        data: @json($userProfile->statistik_scores),
+    }],
+    colors: ['#fcc200'],
+    chart: {
+        height: 350,
+        type: 'radar',
+    },
+    yaxis: {
+        stepSize: 20
+    },
+    xaxis: {
+        categories: ['Data Sain', 'Progammer', 'Sistem Cerdas', 'UI/UX']
+    }
+}
+
+var chart = new ApexCharts(document.querySelector("#chart"), options);
+chart.render();
+
 </script>
 @endpush
