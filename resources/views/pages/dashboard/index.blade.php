@@ -85,86 +85,7 @@
 
         @include('includes.alert')
 
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-
-            {{-- pop over start --}}
-            <div data-popover id="popover-default" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-golden-200 rounded-lg shadow-sm opacity-0">
-                <div class="px-3 py-2 bg-golden-100 border-b border-golden-200 rounded-t-lg">
-                    <h3 class="font-semibold text-gray-900">Score File</h3>
-                </div>
-                <div class="px-3 py-2">
-                    <p>merupakan score hasil dari klasifikasi file dokumen oleh mesin</p>
-                </div>
-                <div data-popper-arrow></div>
-            </div>
-            {{-- pop over end --}}
-
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-golden-300">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            No
-                        </th>
-                        <th scope="col" class="px-6 py-4 w-2/5 font-medium text-gray-900 whitespace-nowrap">
-                            File
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Scores <span data-popover-target="popover-default"><i class="fa-regular fa-circle-question"></i></span>
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Labels
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Type
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Tanggal
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($userFiles as $key => $item)
-                    <tr class="bg-white border-b hover:bg-gray-100">
-                        <td class="px-6 py-4">
-                            {{ ($userFiles->currentPage() - 1) * $userFiles->perPage() + $key + 1 }}
-                        </td>
-                        <th scope="row" class="px-6 py-4 whitespace-nowrap">
-                            <a href="{{ env('CLASSIFICATION_CONNECTION') . 'library?folder_path=' . $item->path }}" target="__blank" class="text-golden-700 hover:underline">{{ $item->file }}</a>
-                        </th>
-                        <td class="px-6 py-4">
-                            @foreach ($item->scores as $key => $score)
-                                <div class="flex justify-between">
-                                    <div class="{{ $score > 50 ? 'font-medium' : '' }} capitalize">{{ $key }}</div>
-                                    <div class=""> {{ $score }}</div>
-                                </div>
-                            @endforeach
-                        </td>
-                        <td class="px-6 py-4">
-                            @foreach ($item->labels as $label)
-                                <div class="font-medium capitalize">{{ $label }}</div>
-                            @endforeach
-                        </td>
-                        <td class="px-6 py-4 capitalize">
-                            {{ $item->type }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->created_at->diffForHumans() }}
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                            <a href="#" class="font-medium text-red-600 hover:underline">Delete</a>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="7" class="px-6 py-4 text-center text-gray-900 font-medium text-md">Tidak Ditemukan</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+        @livewire('list-file-user', ['lazy' => true])
     </section>
 </main>
 @endsection
@@ -172,10 +93,12 @@
 
 @push('style')
 <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+@livewireStyles
 @endpush
 
 
 @push('script')
+@livewireScripts
 {{-- plugin filepond start --}}
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
 <script src="https://unpkg.com/filepond/dist/filepond.js"></script>

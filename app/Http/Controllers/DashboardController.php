@@ -14,10 +14,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $userFiles = UserFile::where('user_id', auth()->user()->id)->paginate(10);
         $userProfile = UserProfile::where('user_id', auth()->user()->id)->first();
 
-        return view('pages.dashboard.index', compact('userFiles', 'userProfile'));
+        return view('pages.dashboard.index', compact('userProfile'));
     }
 
     public function userFilePost(Request $request, \App\Services\Interfaces\ClassificationService $classificationService, \App\Services\Interfaces\ScoreService $scoreService)
