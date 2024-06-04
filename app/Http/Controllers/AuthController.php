@@ -71,7 +71,7 @@ class AuthController extends Controller
                 'password' => $request->input('password')
             ]);
 
-            $userProfile = \App\Models\UserProfile::create(['user_id' => $user->id]);
+            $userProfile = \App\Models\UserProfile::create(['user_id' => $user->id, 'statistik_scores' => [0, 0, 0, 0]]);
 
             Log::info('user register baru', [
                 'data' => $user
