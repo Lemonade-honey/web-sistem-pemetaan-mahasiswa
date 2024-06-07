@@ -221,10 +221,10 @@
 
         server: {
             process: {
-                url: "{{ env('CLASSIFICATION_CONNECTION') . 'upload-file' }}",
+                url: "{{ env('CLASSIFICATION_CONNECTION') . 'upload-file-document' }}",
             },
             revert: {
-                url: "{{ env('CLASSIFICATION_CONNECTION') . 'delete-file' }}",
+                url: "{{ env('CLASSIFICATION_CONNECTION') . 'revert-file-document' }}",
             }
         },
     });
@@ -247,7 +247,7 @@
                 url: "{{ env('CLASSIFICATION_CONNECTION') . 'upload-file-transkip' }}",
             },
             revert: {
-                url: "{{ env('CLASSIFICATION_CONNECTION') . 'upload-file-transkip' }}",
+                url: "{{ env('CLASSIFICATION_CONNECTION') . 'revert-file-transkip' }}",
             }
         },
     });
