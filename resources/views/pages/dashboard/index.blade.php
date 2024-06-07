@@ -2,7 +2,7 @@
 
 @section('body')
 <header class="mb-10">
-    <h1 class="text-3xl font-medium text-golden-600">My Dashboard</h1>
+    <h1 class="text-3xl font-medium text-golden-600">Profile User</h1>
     <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore blanditiis officiis quaerat vitae, quas ex quo natus veritatis tenetur ipsa.</p>
 </header>
 <main>
@@ -10,21 +10,10 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div class="col-span-2">
                 <div class="w-full p-2 border border-golden-200 shadow rounded-lg mb-5">
-                    <div class="mb-4">
-                        <h2 class="text-xl font-medium text-golden-600">Profile</h2>
-                    </div>
                     <div class="w-full p-4 border border-golden-200 rounded-md mb-5 flex justify-between">
                         <div class="">
-                            <table class="border-collapse">
-                                <tr>
-                                    <td>Nama</td>
-                                    <td>Daffa Alif</td>
-                                </tr>
-                                <tr>
-                                    <td>Email</td>
-                                    <td>daffaalif08@gmail.com</td>
-                                </tr>
-                            </table>
+                            <p class="text-lg capitalize">{{ $userProfile->oneUser->name }}</p>
+                            <p class="text-xs">{{ $userProfile->oneUser->email }}</p>
                         </div>
                         <div class="">
                             <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50" type="button">
@@ -38,9 +27,6 @@
                                     <li>
                                         <p data-modal-target="transkip-modal" data-modal-toggle="transkip-modal" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Transkip</p>
                                     </li>
-                                    {{-- <li>
-                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer text-yellow-700">Hide Transkip File</a>
-                                    </li> --}}
                                 </ul>
                             </div>
 
@@ -55,7 +41,7 @@
                                                 <h3 class="text-xl font-semibold text-gray-900">
                                                     Transkip Nilai
                                                 </h3>
-                                                <p class="text-sm">anda dapat menyembunyikan file transkip nilai anda dari public melalui menu sebelumnya</p>
+                                                <p class="text-sm">tenang aja, transkip file <span class="font-medium">tidak ditampilkan</span></p>
                                             </div>
                                             <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="transkip-modal">
                                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -89,6 +75,7 @@
                                 <div class="p-2 border border-golden-100">
                                     <div class="">
                                         <p class="font-medium">Scores Akademik</p>
+                                        <p class="text-xs">total score transkip nilai yang diperoleh</p>
                                     </div>
                                     <div class="flex justify-end">
                                         <p class="text-2xl">{{ $userProfile->transkip_point }} pt</p>
@@ -96,7 +83,10 @@
                                 </div>
                             </div>
                             <div class="p-2 border border-golden-100 sm:col-span-3">
-                                <p class="font-medium mb-2">Badge</p>
+                                <div class="mb-2">
+                                    <p class="font-medium">Badge</p>
+                                    <p class="text-xs">penghargaan matakuliah yang diperoleh</p>
+                                </div>
                                 <div class="flex flex-wrap gap-2">
                                     @foreach ($userProfile->transkip_badge as $item)
                                         <p class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-yellow-300">{{ $item }}</p>
@@ -104,12 +94,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="w-full p-2 border border-golden-200 shadow rounded-lg">
-                    <div class="mb-4">
-                        <h2 class="text-xl font-medium text-golden-600">Suggestion News</h2>
                     </div>
                 </div>
             </div>
@@ -129,7 +113,7 @@
         <div class="mb-4">
             <div class="sm:flex items-center sm:justify-between">
                 <div class="">
-                    <h2 class="text-xl font-medium text-golden-600">File User</h2>
+                    <h2 class="text-xl font-medium text-golden-600">Research dan Sertifikat User</h2>
                     <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, explicabo!</p>
                 </div>
                 <button type="button" data-modal-target="default-modal" data-modal-toggle="default-modal" class="text-white bg-golden-700 hover:bg-golden-800 focus:ring-4 focus:outline-none focus:ring-golden-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Tambah</button>

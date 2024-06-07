@@ -14,7 +14,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $userProfile = UserProfile::where('user_id', auth()->user()->id)->first();
+        $userProfile = UserProfile::with('oneUser')
+        ->where('user_id', auth()->user()->id)->first();
 
         return view('pages.dashboard.index', compact('userProfile'));
     }
@@ -104,13 +105,41 @@ class DashboardController extends Controller
             \Illuminate\Support\Facades\DB::commit();
 
             return back()->with('success', 'berhasil menambahkan transkip nilai');
-            } catch (\Throwable $th) {
+            } 
+            catch (\Throwable $th) {
+                \Illuminate\Support\Facades\DB::rollBack();
                 Log::error("transkip gagal ditambahkan", [
                     "class" => get_class(),
                     "user" => auth()->user(),
                     "massage" => $th->getMessage()
                 ]);
                 return back()->with('error', 'gagal menambahkan transkip nilai');
+        }
+    }
+
+    public function deleteFile($id, \App\Services\Interfaces\ClassificationService $classificationService, \App\Services\Interfaces\ScoreService $scoreService)
+    {
+        $userFile = UserFile::findOrFail($id);
+        
+        try{
+            $filePath = substr($userFile->path, 0, 7);
+
+            if ($classificationService->deleteFile($filePath) == 200)
+            {
+                \Illuminate\Support\Facades\DB::beginTransaction();
+                $userFile->delete();
+
+                $scoreService->syncroniceScoreUser();
+
+                \Illuminate\Support\Facades\DB::commit();
+                return back()->with('success', 'file berhasil di hapus');
+            }
+
+            return back()->with('error', 'file gagal dihapus');
+        } catch(\Throwable $th)
+        {
+            \Illuminate\Support\Facades\DB::rollBack();
+            return back()->with('error', 'server errors');
         }
     }
 

@@ -26,6 +26,8 @@ Route::middleware('auth')->group(function(){
     Route::post('/user-file-transkip', [DashboardController::class, 'userTranskipNilaiPost'])->name('user-file-transkip.post');
 
     Route::post('/user-file', [DashboardController::class, 'userFilePost'])->name('user-file.post');
+
+    Route::get('/delete-document/{id}', [DashboardController::class, 'deleteFile'])->name('delete.file');
 });
 
 

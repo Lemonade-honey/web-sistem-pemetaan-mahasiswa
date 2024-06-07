@@ -58,7 +58,7 @@
                         {{ ($userFiles->currentPage() - 1) * $userFiles->perPage() + $key + 1 }}
                     </td>
                     <th scope="row" class="px-6 py-4 whitespace-nowrap">
-                        <a href="{{ env('CLASSIFICATION_CONNECTION') . 'library?folder_path=' . $item->path }}" target="__blank" class="text-golden-700 hover:underline">{{ $item->file }}</a>
+                        <a href="{{ env('CLASSIFICATION_CONNECTION') . 'library?folder_path=' . $item->path }}" target="__blank" class="text-golden-700 hover:underline">{{ strlen($item->file) > 55 ? substr($item->file, 0, 50) . '...' : $item->file}}</a>
                     </th>
                     <td class="px-6 py-4">
                         @foreach ($item->scores as $key => $score)
@@ -80,7 +80,7 @@
                         {{ $item->created_at->diffForHumans() }}
                     </td>
                     <td class="px-6 py-4 text-right">
-                        <a href="#" class="font-medium text-red-600 hover:underline">Delete</a>
+                        <a href="{{ route('delete.file', ['id' => $item->id]) }}" class="font-medium text-red-600 hover:underline">Delete</a>
                     </td>
                 </tr>
                 @empty

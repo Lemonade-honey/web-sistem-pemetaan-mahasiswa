@@ -62,4 +62,14 @@ class ClassificationServiceImpl implements ClassificationService
             throw $ex;
         }
     }
+
+    // delete
+    public function deleteFile(string $folder)
+    {
+        $request = $this->client->request('DELETE', self::generateUrlEndpoint('delete-file-document'), [
+            'query' => ['folder' => $folder]
+        ])->getStatusCode();
+    
+        return $request;
+    }
 }

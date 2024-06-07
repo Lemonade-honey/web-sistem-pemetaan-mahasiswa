@@ -21,4 +21,10 @@ class UserProfile extends Model
             'transkip_badge' => 'array',
         ];
     }
+
+    // relation
+    public function oneUser()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

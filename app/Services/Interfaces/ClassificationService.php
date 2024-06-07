@@ -28,4 +28,6 @@ interface ClassificationService{
      * TRANSKIP NILAI LOGIC SCORES
      */
     public function transkipNilaiScore(string $file_path);
+
+    public function deleteFile(string $filePath);
 }
