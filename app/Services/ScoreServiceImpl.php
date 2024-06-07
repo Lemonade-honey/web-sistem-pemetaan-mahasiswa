@@ -35,13 +35,48 @@ class ScoreServiceImpl implements ScoreService
         return array_values($labels);
     }
 
+    public function scoresTranskipUser()
+    {
+        $userProfile = \App\Models\UserProfile::where('user_id', auth()->user()->id)->first();
+
+        $labels = collect($userProfile->transkip_scores);
+
+        $labels = self::fillCollectionKey($labels, self::LABEL_KEY_ORDERS)->toArray();
+
+        // sorting berdasarkan key
+        ksort($labels);
+
+        return array_values($labels);
+    }
+
     public function syncroniceScoreUser(): void
     {
         $labelsScore = $this->scoresLabelsUser();
+        $transkipScore = $this->scoresTranskipUser();
+
+        // Array hasil penjumlahan
+        $result = [];
+
+        // Menggabungkan kedua array
+        foreach ($labelsScore as $key => $value) {
+            if (isset($result[$key])) {
+                $result[$key] += $value;
+            } else {
+                $result[$key] = $value;
+            }
+        }
+
+        foreach ($transkipScore as $key => $value) {
+            if (isset($result[$key])) {
+                $result[$key] += $value;
+            } else {
+                $result[$key] = $value;
+            }
+        }
 
         // save data to db
         $userProfile = \App\Models\UserProfile::where('user_id', auth()->user()->id)->first();
-        $userProfile->statistik_scores = $labelsScore;
+        $userProfile->statistik_scores = $result;
         $userProfile->save();
     }
 

@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::post('/user-file-transkip', [DashboardController::class, 'userTranskipNilaiPost'])->name('user-file-transkip.post');
+
     Route::post('/user-file', [DashboardController::class, 'userFilePost'])->name('user-file.post');
 });
 

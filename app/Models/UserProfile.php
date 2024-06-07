@@ -16,7 +16,9 @@ class UserProfile extends Model
     protected function casts(): array
     {
         return [
-            'statistik_scores' => 'array'
+            'statistik_scores' => 'array',
+            'transkip_scores' => 'array',
+            'transkip_badge' => 'array',
         ];
     }
 }

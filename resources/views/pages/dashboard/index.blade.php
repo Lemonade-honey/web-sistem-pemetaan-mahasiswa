@@ -38,9 +38,9 @@
                                     <li>
                                         <p data-modal-target="transkip-modal" data-modal-toggle="transkip-modal" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Transkip</p>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="#" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer text-yellow-700">Hide Transkip File</a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div>
 
@@ -48,7 +48,7 @@
                             <div id="transkip-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                 <div class="relative p-4 w-full max-w-2xl max-h-full">
                                     <!-- Modal content -->
-                                    <form action="{{ route('user-file.post') }}" method="POST" class="relative bg-white rounded-lg shadow">
+                                    <form action="{{ route('user-file-transkip.post') }}" method="POST" class="relative bg-white rounded-lg shadow">
                                         <!-- Modal header -->
                                         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                                             <div class="">
@@ -91,18 +91,16 @@
                                         <p class="font-medium">Scores Akademik</p>
                                     </div>
                                     <div class="flex justify-end">
-                                        <p class="text-2xl">515 pt</p>
+                                        <p class="text-2xl">{{ $userProfile->transkip_point }} pt</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="p-2 border border-golden-100 sm:col-span-3">
                                 <p class="font-medium mb-2">Badge</p>
                                 <div class="flex flex-wrap gap-2">
-                                    <p class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-yellow-300">Web Progammer</p>
-                                    <p class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-yellow-300">Mobile Progammer</p>
-                                    <p class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-yellow-300">Data Mining</p>
-                                    <p class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-yellow-300">Sistem Pengambil Keputusan</p>
-                                    <p class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-yellow-300">Basic Progammer</p>
+                                    @foreach ($userProfile->transkip_badge as $item)
+                                        <p class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-yellow-300">{{ $item }}</p>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

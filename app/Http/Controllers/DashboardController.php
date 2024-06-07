@@ -74,9 +74,53 @@ class DashboardController extends Controller
         }
     }
 
+    public function userTranskipNilaiPost(Request $request, \App\Services\Interfaces\ClassificationService $classificationService, \App\Services\Interfaces\ScoreService $scoreService)
+    {
+        $request->validate([
+            'file' => 'required',
+        ]);
+
+        $filePath = str_replace('"', '', $request->file);
+        
+        try {
+            $transkipScores = collect($classificationService->transkipNilaiScore($filePath))->toArray();
+
+            $transkipLabel = collect($transkipScores['transkip-label-score'])->toArray();
+            $transkipPoint = collect($transkipScores['akademik-scores'])->toArray();
+            $transkipBadge = collect($transkipScores['badge'])->toArray();
+
+            \Illuminate\Support\Facades\DB::beginTransaction();
+
+            $userProfile = UserProfile::where('user_id', auth()->user()->id)->first();
+            $userProfile->transkip_scores = $transkipLabel;
+            $userProfile->path_transkip = $filePath;
+            $userProfile->transkip_point = $transkipPoint[0];
+            $userProfile->transkip_badge = $transkipBadge;
+            $userProfile->save();
+
+            // sync score to profile
+            $scoreService->syncroniceScoreUser();
+
+            \Illuminate\Support\Facades\DB::commit();
+
+            return back()->with('success', 'berhasil menambahkan transkip nilai');
+            } catch (\Throwable $th) {
+                Log::error("transkip gagal ditambahkan", [
+                    "class" => get_class(),
+                    "user" => auth()->user(),
+                    "massage" => $th->getMessage()
+                ]);
+                return back()->with('error', 'gagal menambahkan transkip nilai');
+        }
+    }
+
     // test route
     public function test(\App\Services\Interfaces\ScoreService $scoreService)
     {
-        $scoreService->syncroniceScoreUser();
+
+        // dd($scoreService->scoresTranskipUser());
+
+        // $scoreService->syncroniceScoreUser();
+
     }
 }

@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
+            $table->text('transkip_scores')->nullable();
             $table->text('statistik_scores')->nullable();
+            $table->text('path_transkip')->nullable();
+            $table->text('transkip_badge')->nullable();
+            $table->string('transkip_point')->nullable()->default('0');
             $table->timestamps();
         });
     }

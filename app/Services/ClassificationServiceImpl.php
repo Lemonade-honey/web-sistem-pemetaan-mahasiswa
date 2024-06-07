@@ -47,4 +47,19 @@ class ClassificationServiceImpl implements ClassificationService
 
         return $result;
     }
+
+    // transkip nilai logic
+    public function transkipNilaiScore(string $file_path)
+    {
+        try{
+            $request = $this->client->request('POST', self::generateUrlEndpoint('transkip-nilai-scores'), [
+                'query' => ['folder_file_path' => $file_path]
+            ])->getBody()->getContents();
+    
+            return json_decode($request);
+        } catch(\Exception $ex)
+        {
+            throw $ex;
+        }
+    }
 }

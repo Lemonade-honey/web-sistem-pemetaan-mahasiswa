@@ -23,4 +23,9 @@ interface ClassificationService{
      * menghitung hasil dari prediksi classificasi yang telah dilakukan
      */
     public function labelCalculate(array $probabilitas, int $min = 50): ?array;
+
+    /**
+     * TRANSKIP NILAI LOGIC SCORES
+     */
+    public function transkipNilaiScore(string $file_path);
 }

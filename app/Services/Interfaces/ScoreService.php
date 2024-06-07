@@ -11,6 +11,8 @@ interface ScoreService
      */
     public function scoresLabelsUser(): array;
 
+    public function scoresTranskipUser();
+
     /**
      * syncorice data score
      * 
