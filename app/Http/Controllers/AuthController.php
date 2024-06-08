@@ -74,7 +74,6 @@ class AuthController extends Controller
             $userProfile = \App\Models\UserProfile::create([
                 'user_id' => $user->id, 
                 'statistik_scores' => [0, 0, 0, 0],
-                'transkip_scores' => [0, 0, 0, 0],
                 'transkip_badge' => []
             ]);
 

@@ -39,14 +39,17 @@ class ScoreServiceImpl implements ScoreService
     {
         $userProfile = \App\Models\UserProfile::where('user_id', auth()->user()->id)->first();
 
-        $labels = collect($userProfile->transkip_scores);
+        if($userProfile->transkip_scores != null){
+            $labels = collect($userProfile->transkip_scores);
+            $labels = self::fillCollectionKey($labels, self::LABEL_KEY_ORDERS)->toArray();
+            // sorting berdasarkan key
+            ksort($labels);
 
-        $labels = self::fillCollectionKey($labels, self::LABEL_KEY_ORDERS)->toArray();
+            return array_values($labels);
+        }
 
-        // sorting berdasarkan key
-        ksort($labels);
-
-        return array_values($labels);
+        // default data
+        return [0, 0, 0, 0];
     }
 
     public function syncroniceScoreUser(): void
