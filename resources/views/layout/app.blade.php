@@ -12,20 +12,12 @@
     @stack('style')
 </head>
 <body>
-    @if (auth()->check())
-        {{-- sidebar and navbar start --}}
-        {{-- @include('include.sidenav') --}}
+    @include('includes.navbar')
         {{-- sidebar and navbar start --}}
 
-        <div class="mt-20 m-4 sm:mx-40">
-            @yield('body')
-        </div>
-    @else
-        {{-- jika belum login --}}
-        <div class="p-4">
-            @yield('body')
-        </div>
-    @endif
+    <div class="mt-20 m-4 sm:mx-40">
+        @yield('body')
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     @stack('script')
 </body>
