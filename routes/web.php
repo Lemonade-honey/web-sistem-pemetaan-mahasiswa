@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function(){
 
     Route::post('/user-file', [DashboardController::class, 'userFilePost'])->name('user-file.post');
 
+    Route::post('/user-massage', [DashboardController::class, 'massagePost'])->name('user-massage.post');
+
     Route::get('/delete-document/{id}', [DashboardController::class, 'deleteFile'])->name('delete.file');
 });
 

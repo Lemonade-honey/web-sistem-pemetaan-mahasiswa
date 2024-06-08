@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
+            $table->text('massage')->nullable();
             $table->text('transkip_scores')->nullable();
             $table->text('statistik_scores')->nullable();
             $table->text('path_transkip')->nullable();

@@ -117,6 +117,33 @@ class DashboardController extends Controller
         }
     }
 
+    public function massagePost(Request $request)
+    {
+        $request->validate([
+            'massage' => ['nullable', 'max:500']
+        ], [
+            'massage.max' => 'panjang karakter tidak boleh lebih dari 500'
+        ]);
+
+        try {
+            $userProfile = UserProfile::where('user_id', auth()->user()->id)->first();
+            
+            $userProfile->massage = htmlspecialchars($request->massage);
+
+            $userProfile->save();
+
+            return back()->with('success', 'berhasil mengubah data');
+
+        } catch (\Throwable $th) {
+            Log::error('gagal mengubah massage', [
+                'class' => get_class(),
+                'massage' => $th->getMessage()
+            ]);
+
+            return back()->with('error', 'gagal mengubah data');
+        }
+    }
+
     public function deleteFile($id, \App\Services\Interfaces\ClassificationService $classificationService, \App\Services\Interfaces\ScoreService $scoreService)
     {
         $userFile = UserFile::findOrFail($id);
