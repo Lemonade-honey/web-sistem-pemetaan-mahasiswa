@@ -17,6 +17,8 @@ Route::middleware('guest')->group(function(){
     Route::post('register', [AuthController::class, 'registerPost']);
 });
 
+Route::view('/mahasiswa', 'mahasiswa')->name('mahasiswa-list');
+
 Route::middleware('auth')->group(function(){
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

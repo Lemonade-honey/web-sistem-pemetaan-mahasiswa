@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layout.app', ['target' => 'dashboard'])
 
 @section('body')
 <header class="mb-10">

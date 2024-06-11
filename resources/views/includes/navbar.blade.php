@@ -9,7 +9,7 @@
         <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                 <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo">
+                <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="user photo">
             </button>
             <!-- Dropdown menu -->
             <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow" id="user-dropdown">
@@ -18,6 +18,9 @@
                     <span class="block text-sm  text-gray-500 truncate">{{ auth()->user()->email }}</span>
                 </div>
                 <ul class="py-2" aria-labelledby="user-menu-button">
+                    <li>
+                        <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a>
+                    </li>
                     <li>
                         <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100">Sign out</a>
                     </li>
@@ -35,19 +38,13 @@
         <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
             <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
                 <li>
-                    <a href="#" class="block py-2 px-3 text-white bg-golden-700 rounded md:bg-transparent md:text-golden-700 md:p-0" aria-current="page">Home</a>
+                    <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-golden-700 md:p-0">Home</a>
                 </li>
                 <li>
                     <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-golden-700 md:p-0">About</a>
                 </li>
                 <li>
-                    <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-golden-700 md:p-0">Mahasiswa</a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-golden-700 md:p-0">Pricing</a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-golden-700 md:p-0">Contact</a>
+                    <a href="{{ route('mahasiswa-list') }}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-golden-700 md:p-0">Mahasiswa</a>
                 </li>
             </ul>
         </div>
