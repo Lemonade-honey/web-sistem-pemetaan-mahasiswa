@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/my-profile', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::post('/user-file-transkip', [DashboardController::class, 'userTranskipNilaiPost'])->name('user-file-transkip.post');
 
