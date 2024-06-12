@@ -1,17 +1,7 @@
 <div>
-    <div class="flex flex-wrap justify-between gap-4 mb-2">
-        <div class="sm:flex w-full sm:w-3/12 items-center gap-3">
-            <p class="text-sm">Filter Type</p>
-            <div class="flex">
-                <select wire:model.change="filterBadge" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-golden-500 focus:border-golden-500 block w-full p-2.5 capitalize">
-                    <option value="">--Semua--</option>
-                    <option value="web progammer">Web Progammer</option>
-                    <option value="cyber crime analysis">cyber crime analysis</option>
-                </select>
-            </div>
-        </div>
+    <div class="flex flex-wrap justify-end gap-4 mb-2">
         <div class="w-full sm:w-3/12">
-            <input type="search" wire:model.live.debounce.400ms="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-golden-500 focus:border-golden-500 block w-full p-2.5" placeholder="Search...">
+            <input type="search" wire:model.live.debounce.600ms="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-golden-500 focus:border-golden-500 block w-full p-2.5" placeholder="Search...">
         </div>
     </div>
     <div wire:loading class="w-full gap-3 p-4 border border-gray-100 shadow rounded-md mb-2">
@@ -24,68 +14,55 @@
     </div>
     <div wire:loading.remove class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-golden-200">
+            <thead class="text-xs text-gray-700 uppercase bg-golden-300">
                 <tr>
                     <th scope="col" class="px-6 py-3">
                         No
                     </th>
-                    <th scope="col" class="px-6 py-3">
-                        Nama Mahasiswa
-                    </th>
-                    <th scope="col" class="px-6 py-4">
-                        Prodi
-                    </th>
-                    <th scope="col" class="px-6 py-4 w-4/12">
-                        Badge
+                    <th scope="col" class="px-6 py-4 w-2/5 font-medium text-gray-900 whitespace-nowrap">
+                        File
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Score Akademik
+                        Scores
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        
+                        Labels
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Type
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Tanggal
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($users as $key => $item)
+                @forelse ($userFiles as $key => $item)
                 <tr class="bg-white border-b hover:bg-gray-100">
                     <td class="px-6 py-4">
-                        {{ ($users->currentPage() - 1) * $users->perPage() + $key + 1 }}
+                        {{ ($userFiles->currentPage() - 1) * $userFiles->perPage() + $key + 1 }}
                     </td>
-                    <th scope="row" class="px-6 py-4">
-                        {{ $item->name }}
+                    <th scope="row" class="px-6 py-4 whitespace-nowrap">
+                        <a href="{{ env('CLASSIFICATION_CONNECTION') . 'library?folder_path=' . $item->path }}" target="__blank" class="text-golden-700 hover:underline">{{ strlen($item->file) > 55 ? substr($item->file, 0, 50) . '...' : $item->file}}</a>
                     </th>
                     <td class="px-6 py-4">
-                        Informatika S1
-                    </td>
-                    <td class="px-6 py-4 flex">
-                        @php
-                            $count = 0;
-                        @endphp
-                        @foreach ($item->oneProfile->transkip_badge as $badge => $level)
-                            @if ($level == 2)
-                            <p class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-yellow-300">{{ $badge}}</p>
-                            @elseif($level == 1)
-                            <p class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-blue-300">{{ $badge}}</p>
-                            @else
-                            <p class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-gray-300">{{ $badge}}</p>
-                            @endif
-
-                            @php
-                                $count++;
-                            @endphp
-
-                            @if($count == 2)
-                                <p>{{ count($item->oneProfile->transkip_badge) - 2 }}+ more</p>
-                                @break
-                            @endif
+                        @foreach ($item->scores as $key => $score)
+                            <div class="flex justify-between">
+                                <div class="{{ $score > 50 ? 'font-medium' : '' }} capitalize">{{ $key }}</div>
+                                <div class=""> {{ $score }}</div>
+                            </div>
                         @endforeach
                     </td>
-                    <th scope="row" class="px-6 py-4">
-                        {{ $item->oneProfile->transkip_point }} pt
-                    </th>
                     <td class="px-6 py-4">
-                        <a href="{{ route('mahasiswa-detail', ['uuid' => $item->uuid]) }}">view</a>
+                        @foreach ($item->labels as $label)
+                            <div class="font-medium capitalize">{{ $label }}</div>
+                        @endforeach
+                    </td>
+                    <td class="px-6 py-4 capitalize">
+                        {{ $item->type }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $item->created_at->diffForHumans() }}
                     </td>
                 </tr>
                 @empty
@@ -105,8 +82,8 @@
             <option>100</option>
         </select>
     </div>
-    
+
     <div class="w-full mt-4">
-        {{ $users->links() }}
+        {{ $userFiles->links() }}
     </div>
 </div>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\MahasiswaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,7 +18,10 @@ Route::middleware('guest')->group(function(){
     Route::post('register', [AuthController::class, 'registerPost']);
 });
 
-Route::view('/mahasiswa', 'mahasiswa')->name('mahasiswa-list');
+Route::prefix('/mahasiswa')->group(function(){
+    Route::view('/', 'mahasiswa')->name('mahasiswa-list');
+    Route::get('/detail/{uuid}', [MahasiswaController::class, 'detail'])->name('mahasiswa-detail');
+});
 
 Route::middleware('auth')->group(function(){
 
