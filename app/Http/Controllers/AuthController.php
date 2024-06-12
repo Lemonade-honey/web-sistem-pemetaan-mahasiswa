@@ -27,7 +27,7 @@ class AuthController extends Controller
                 $request->session()->regenerate();
                 
                 Log::info("login auth by " . auth()->user()->email);
-                return redirect()->intended('/');
+                return redirect()->route('dashboard');
             }
 
             return back()->withErrors([
@@ -54,7 +54,11 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => ['required', 'max:255', 'min:3'],
-            'email' => ['required', 'email', 'unique:users,email'],
+            'email' => ['required', 'email', function ($attribute, $value, $fail) {
+                if (!str_ends_with($value, '@webmail.uad.ac.id')) {
+                    $fail('Email harus menggunakan domain @webmail.uad.ac.id.');
+                }
+            }, 'unique:users,email'],
             'password' => ['required', 'min:6']
         ], [
             'name.min' => 'minimal panjang nama 3 karakter',
