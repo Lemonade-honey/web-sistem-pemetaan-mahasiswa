@@ -25,13 +25,15 @@ class ClassificationServiceImpl implements ClassificationService
         return $this->client->request('GET', self::generateUrlEndpoint())->getStatusCode() == 200 ? true : false;
     }
 
-    public function classificationDokumen(string $file_path)
+    public function classificationDokumen(string $file_path): array
     {
         $request = $this->client->request('POST', self::generateUrlEndpoint('classification-internal'), [
             'query' => ['folder_file_path' => $file_path]
         ])->getBody()->getContents();
         
-        return json_decode($request);
+        $data = collect(json_decode($request, true));
+
+        return $data['data'];
     }
 
     public function labelCalculate(array $probabilitas, int $min = 50): ?array
