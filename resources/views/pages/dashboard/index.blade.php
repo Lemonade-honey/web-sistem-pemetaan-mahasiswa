@@ -226,9 +226,12 @@
                                 </div>
                                 <div class="">
                                     <label for="aspek" class="block mb-2 text-sm font-medium text-gray-900">Type</label>
-                                    <select name="type" id="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5">
-                                        <option value="laporan">Laporan</option>
-                                        <option value="sertifikat">Sertifikat</option>
+                                    <select name="type" id="tipe-dokumen" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" required>
+                                        <option></option>
+                                        <option value="laporan akhir / skripsi">laporan akhir / skripsi</option>
+                                        <option value="laporan praktik magang">laporan praktik magang</option>
+                                        <option value="jurnal">jurnal</option>
+                                        <option value="SKPI">SKPI</option>
                                     </select>
                                 </div>
                             </div>
@@ -251,6 +254,9 @@
 
 @push('style')
 <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @livewireStyles
 @endpush
 
@@ -259,6 +265,7 @@
 @livewireScripts
 {{-- plugin filepond start --}}
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
 <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 {{-- plugin filepond end --}}
 
@@ -266,6 +273,7 @@
 
 <script>
     FilePond.registerPlugin(FilePondPluginFileValidateType);
+    FilePond.registerPlugin(FilePondPluginFileValidateSize);
 
     // Get a reference to the file input element
     const inputElement = document.querySelector('input[id="file"]');
@@ -276,7 +284,8 @@
     FilePond.setOptions({
         // validate
         acceptedFileTypes: ['application/pdf'],
-
+        required: true,
+        maxFileSize: "10MB",
         server: {
             process: {
                 url: "{{ env('CLASSIFICATION_CONNECTION') . 'upload-file-document' }}",
@@ -299,7 +308,8 @@
     test.setOptions({
         // validate
         acceptedFileTypes: ['application/pdf'],
-
+        required: true,
+        maxFileSize: "1MB",
         server: {
             process: {
                 url: "{{ env('CLASSIFICATION_CONNECTION') . 'upload-file-transkip' }}",
@@ -334,6 +344,12 @@ var options =
 
 var chart = new ApexCharts(document.querySelector("#chart"), options);
 chart.render();
+
+$(document).ready(function() {
+    $('#tipe-dokumen').select2({
+        placeholder: "tipe dokumen"
+    });
+});
 
 </script>
 @endpush
