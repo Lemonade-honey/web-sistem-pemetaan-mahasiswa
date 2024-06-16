@@ -31,10 +31,9 @@ class DashboardController extends Controller
 
         $prediksi = collect($classificationService->classificationDokumen($filePath))->toArray();
 
-        $probabilitas = collect($prediksi['data']->probabilitas)->toArray();
+        $probabilitas = $prediksi['classification_scores']['probabilitas'];
 
-        $labels = $classificationService->labelCalculate($probabilitas);
-
+        $labels = $classificationService->labelCalculate($probabilitas, 30);
 
         try {
 
