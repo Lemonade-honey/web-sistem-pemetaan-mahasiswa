@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text("file");
             $table->text("scores")->nullable();
             $table->text("labels")->nullable();
+            $table->text('ringkasan')->nullable();
+            $table->string('akurasi', 5);
             $table->string("type");
             $table->timestamps();
         });

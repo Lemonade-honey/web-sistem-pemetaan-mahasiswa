@@ -45,6 +45,8 @@ class DashboardController extends Controller
                 "file" => substr($filePath, 8),
                 "scores" => $probabilitas,
                 "labels" => $labels,
+                "ringkasan" => $prediksi['ringkasan'],
+                "akurasi" => $prediksi['classification_scores']['akurasi_score'],
                 "type" => $request->type
             ]);
 

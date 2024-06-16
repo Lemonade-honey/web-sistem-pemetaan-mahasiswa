@@ -29,10 +29,13 @@
                         Labels
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Akurasi
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Type
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Tanggal
+                        Ringkasan
                     </th>
                 </tr>
             </thead>
@@ -48,7 +51,7 @@
                     <td class="px-6 py-4">
                         @foreach ($item->scores as $key => $score)
                             <div class="flex justify-between">
-                                <div class="{{ $score > 50 ? 'font-medium' : '' }} capitalize">{{ $key }}</div>
+                                <div class="{{ $score > 30 ? 'font-medium' : '' }} capitalize">{{ $key }}</div>
                                 <div class=""> {{ $score }}</div>
                             </div>
                         @endforeach
@@ -58,11 +61,14 @@
                             <div class="font-medium capitalize">{{ $label }}</div>
                         @endforeach
                     </td>
-                    <td class="px-6 py-4 capitalize">
+                    <td class="px-6 py-4 capitalize font-medium">
+                        {{ $item->akurasi }} %
+                    </td>
+                    <td class="px-6 py-4">
                         {{ $item->type }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $item->created_at->diffForHumans() }}
+                        {{ strlen($item->ringkasan) > 100 ? substr($item->ringkasan, 0, 100) . '...' : $item->ringkasan}}
                     </td>
                 </tr>
                 @empty

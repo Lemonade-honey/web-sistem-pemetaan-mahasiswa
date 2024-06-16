@@ -29,10 +29,13 @@
                         Labels
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Akurasi
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Type
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Tanggal
+                        Ringkasan
                     </th>
                     <th scope="col" class="px-6 py-3">
                         
@@ -47,11 +50,13 @@
                     </td>
                     <th scope="row" class="px-6 py-4 whitespace-nowrap">
                         <a href="{{ env('CLASSIFICATION_CONNECTION') . 'library?folder_path=' . $item->path }}" target="__blank" class="text-golden-700 hover:underline">{{ strlen($item->file) > 55 ? substr($item->file, 0, 50) . '...' : $item->file}}</a>
+
+                        <p>{{ $item->created_at->diffForHumans() }}</p>
                     </th>
                     <td class="px-6 py-4">
                         @foreach ($item->scores as $key => $score)
                             <div class="flex justify-between">
-                                <div class="{{ $score > 50 ? 'font-medium' : '' }} capitalize">{{ $key }}</div>
+                                <div class="{{ $score > 30 ? 'font-medium' : '' }} capitalize">{{ $key }}</div>
                                 <div class=""> {{ $score }}</div>
                             </div>
                         @endforeach
@@ -61,11 +66,14 @@
                             <div class="font-medium capitalize">{{ $label }}</div>
                         @endforeach
                     </td>
-                    <td class="px-6 py-4 capitalize">
+                    <td class="px-6 py-4 capitalize font-medium">
+                        {{ $item->akurasi }} %
+                    </td>
+                    <td class="px-6 py-4">
                         {{ $item->type }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $item->created_at->diffForHumans() }}
+                        {{ strlen($item->ringkasan) > 100 ? substr($item->ringkasan, 0, 100) . '...' : $item->ringkasan}}
                     </td>
                     <td class="px-6 py-4 text-right">
                         <a href="{{ route('delete.file', ['id' => $item->id]) }}" class="font-medium text-red-600 hover:underline">Delete</a>
