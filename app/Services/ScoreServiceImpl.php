@@ -8,7 +8,7 @@ class ScoreServiceImpl implements ScoreService
 {
     // urutan labels
     const LABEL_KEY_ORDERS = [
-        'data sain',
+        'data sains',
         'progammer',
         'sistem cerdas',
         'ui/ux'
