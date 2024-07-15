@@ -39,7 +39,7 @@ class ScoreServiceImpl implements ScoreService
     {
         $userProfile = \App\Models\UserProfile::where('user_id', auth()->user()->id)->first();
 
-        if($userProfile->transkip_scores != null){
+        if($userProfile){
             $labels = collect($userProfile->transkip_scores);
             $labels = self::fillCollectionKey($labels, self::LABEL_KEY_ORDERS)->toArray();
             // sorting berdasarkan key
@@ -56,7 +56,7 @@ class ScoreServiceImpl implements ScoreService
     {
         $userProject = \App\Models\UserProject::where('user_id', auth()->user()->id)->first();
 
-        if($userProject->scores != null){
+        if($userProject){
             $labels = collect($userProject->scores);
             $labels = self::fillCollectionKey($labels, self::LABEL_KEY_ORDERS)->toArray();
             // sorting berdasarkan key
