@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="text-sm">
                                     <div class="">
-                                        {{ $mahasiswa->oneProfile->massage ?? 'no desc' }}
+                                        {!! $mahasiswa->oneProfile->massage ?? 'no desc' !!}
                                     </div>
                                     <div class="mt-3 text-xs flex justify-end">
                                         Informatika, 2000018160

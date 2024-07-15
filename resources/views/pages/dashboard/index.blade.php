@@ -351,7 +351,7 @@
         // Copy the text inside the text field
         navigator.clipboard.writeText("{{ route('mahasiswa-detail', ['uuid' => $userProfile->oneUser->uuid]) }}").then(function() {
             // Success feedback (optional)
-            alert("Profile berhasil disalin");
+            alert("Link Profile berhasil disalin");
         }, function(err) {
             // Error feedback (optional)
             console.error("Could not copy text: ", err);
