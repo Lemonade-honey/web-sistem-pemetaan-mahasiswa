@@ -163,7 +163,7 @@ class DashboardController extends Controller
         try {
             $userProfile = UserProfile::where('user_id', auth()->user()->id)->first();
             
-            $userProfile->massage = htmlspecialchars($request->massage);
+            $userProfile->massage = $request->massage;
 
             $userProfile->save();
 
