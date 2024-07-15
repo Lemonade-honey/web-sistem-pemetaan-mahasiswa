@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FileTemp;
-use App\Models\User;
 use App\Models\UserFile;
 use App\Models\UserProfile;
+use App\Models\UserProject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -17,14 +15,18 @@ class DashboardController extends Controller
         $userProfile = UserProfile::with('oneUser')
         ->where('user_id', auth()->user()->id)->first();
 
-        return view('pages.dashboard.index', compact('userProfile'));
+        $userProject = UserProject::where('user_id', auth()->user()->id)->first();
+
+        return view('pages.dashboard.index', compact('userProfile', 'userProject'));
     }
 
     public function userFilePost(Request $request, \App\Services\Interfaces\ClassificationService $classificationService, \App\Services\Interfaces\ScoreService $scoreService)
     {
         $request->validate([
             'file' => 'required',
-            'type' => 'required'
+            'title' => ['required', 'max:255'],
+            'type' => 'required',
+            'desc' => 'nullable'
         ]);
 
         $filePath = str_replace('"', '', $request->file);
@@ -39,16 +41,49 @@ class DashboardController extends Controller
 
             \Illuminate\Support\Facades\DB::beginTransaction();
 
-            $userFile = UserFile::create([
-                "user_id" => auth()->user()->id,
-                "path" => $filePath,
-                "file" => substr($filePath, 8),
-                "scores" => $probabilitas,
-                "labels" => $labels,
-                "ringkasan" => $prediksi['ringkasan'],
-                "akurasi" => $prediksi['classification_scores']['akurasi_score'],
-                "type" => $request->type
-            ]);
+            if($request->input('type') == 'skripsi')
+            {
+                $userProject = UserProject::where('user_id', auth()->user()->id)->first();
+                if ($userProject)
+                {
+                    $userProject->title = $request->input('title');
+                    $userProject->path = $filePath;
+                    $userProject->file = substr($filePath, 8);
+                    $userProject->scores = $probabilitas;
+                    $userProject->labels = $labels;
+                    $userProject->ringkasan = strlen($request->input('desc')) > 10 ? $request->desc : $prediksi['ringkasan'];
+                    $userProject->akurasi = $prediksi['classification_scores']['akurasi_score'];
+                    $userProject->save();
+                } 
+                
+                else
+                {
+                    UserProject::create([
+                        "user_id" => auth()->user()->id,
+                        "title" => $request->input('title'),
+                        "path" => $filePath,
+                        "file" => substr($filePath, 8),
+                        "scores" => $probabilitas,
+                        "labels" => $labels,
+                        "ringkasan" => strlen($request->input('desc')) > 10 ? $request->desc : $prediksi['ringkasan'],
+                        "akurasi" => $prediksi['classification_scores']['akurasi_score'],
+                    ]);
+                }
+            } 
+            
+            else
+            {
+                UserFile::create([
+                    "user_id" => auth()->user()->id,
+                    "path" => $filePath,
+                    "file" => substr($filePath, 8),
+                    "scores" => $probabilitas,
+                    "labels" => $labels,
+                    "ringkasan" => strlen($request->input('desc')) > 10 ? $request->desc : $prediksi['ringkasan'],
+                    "akurasi" => $prediksi['classification_scores']['akurasi_score'],
+                    "type" => $request->type
+                ]);
+            }
 
             // sync score to profile
             $scoreService->syncroniceScoreUser();
@@ -56,7 +91,6 @@ class DashboardController extends Controller
             \Illuminate\Support\Facades\DB::commit();
 
             Log::info("berhasil menambahkan file baru", [
-                "data" => $userFile,
                 "user" => auth()->user()
             ]);
 

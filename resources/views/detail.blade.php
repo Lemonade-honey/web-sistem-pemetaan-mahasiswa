@@ -95,11 +95,49 @@
         </div>
     </section>
 
+    <section class="mb-10">
+        <div class="mb-4">
+            <div class="sm:flex items-center sm:justify-between">
+                <div class="">
+                    <h2 class="text-xl font-medium text-golden-600">Skripsi / Tugas Akhir</h2>
+                </div>
+            </div>
+
+            <div class="w-full p-4 border border-golden-200 rounded-md">
+                @if ($userProject)
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div class="border border-golden-200 grid grid-cols-1 p-2">
+                        <div class="mb-2">
+                            <a href="{{ env('CLASSIFICATION_CONNECTION') . 'library?folder_path=' . $userProject->path }}" target="__blank" class="text-gray-700 text-lg hover:underline">{{ strlen($userProject->title) > 55 ? substr($userProject->title, 0, 50) . '...' : $userProject->title}}</a>
+                        </div>
+                        <div class="">
+                            <div class="mb-2 font-medium">
+                                Akurasi : {{ $userProject->akurasi }}%
+                            </div>
+                            <div class="max-w-xs">
+                                @foreach ($userProject->scores as $key => $score)
+                                <div class="flex justify-between">
+                                    <div class="{{ $score > 30 ? 'font-medium' : '' }} capitalize">{{ $key }}</div>
+                                    <div class=""> {{ $score }}</div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border border-golden-200 col-span-2 p-2">
+                        {{ $userProject->ringkasan }}
+                    </div>
+                </div>
+                @endif
+            </div>
+        </div>
+    </section>
+
     <section>
         <div class="mb-4">
             <div class="sm:flex items-center sm:justify-between">
                 <div class="">
-                    <h2 class="text-xl font-medium text-golden-600">Research dan Sertifikat User</h2>
+                    <h2 class="text-xl font-medium text-golden-600">Dokumen Lainnya</h2>
                 </div>
             </div>
         </div>
