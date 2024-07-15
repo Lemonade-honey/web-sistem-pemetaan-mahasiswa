@@ -52,10 +52,28 @@ class ScoreServiceImpl implements ScoreService
         return [0, 0, 0, 0];
     }
 
+    public function scoresUserProject()
+    {
+        $userProject = \App\Models\UserProject::where('user_id', auth()->user()->id)->first();
+
+        if($userProject->scores != null){
+            $labels = collect($userProject->scores);
+            $labels = self::fillCollectionKey($labels, self::LABEL_KEY_ORDERS)->toArray();
+            // sorting berdasarkan key
+            ksort($labels);
+
+            return array_values($labels);
+        }
+
+        // default data
+        return [0, 0, 0, 0];
+    }
+
     public function syncroniceScoreUser(): void
     {
         $labelsScore = $this->scoresLabelsUser();
         $transkipScore = $this->scoresTranskipUser();
+        $projectScore = $this->scoresUserProject();
 
         // Array hasil penjumlahan
         $result = [];
@@ -70,6 +88,14 @@ class ScoreServiceImpl implements ScoreService
         }
 
         foreach ($transkipScore as $key => $value) {
+            if (isset($result[$key])) {
+                $result[$key] += $value;
+            } else {
+                $result[$key] = $value;
+            }
+        }
+
+        foreach ($projectScore as $key => $value) {
             if (isset($result[$key])) {
                 $result[$key] += $value;
             } else {
