@@ -59,6 +59,7 @@ class AuthController extends Controller
                     $fail('Email harus menggunakan domain @webmail.uad.ac.id.');
                 }
             }, 'unique:users,email'],
+            'nim' => ['required', 'numeric'],
             'password' => ['required', 'min:6']
         ], [
             'name.min' => 'minimal panjang nama 3 karakter',
@@ -77,6 +78,7 @@ class AuthController extends Controller
 
             $userProfile = \App\Models\UserProfile::create([
                 'user_id' => $user->id, 
+                'nim' => $request->input('nim'),
                 'statistik_scores' => [0, 0, 0, 0],
                 'transkip_badge' => []
             ]);

@@ -28,7 +28,7 @@
                                         {!! $mahasiswa->oneProfile->massage ?? 'no desc' !!}
                                     </div>
                                     <div class="mt-3 text-xs flex justify-end">
-                                        Informatika, 2000018160
+                                        Informatika, {{ $mahasiswa->oneProfile->nim }}
                                     </div>
                                 </div>
                             </div>

@@ -26,6 +26,13 @@
                         <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="name@flowbite.com" value="{{ old('email') }}" required/>
                     </div>
                     <div class="mb-5">
+                        <label for="nim" class="block text-sm font-medium text-gray-900">Your NIM</label>
+                        @error('nim')
+                            <p class="text-xs text-red-500">{{ $message }}</p>
+                        @enderror
+                        <input type="number" id="nim" name="nim" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="{{ old('nim') }}" required />
+                    </div>
+                    <div class="mb-5">
                         <label for="password" class="block text-sm font-medium text-gray-900">Your password</label>
                         @error('password')
                             <p class="text-xs text-red-500">{{ $message }}</p>

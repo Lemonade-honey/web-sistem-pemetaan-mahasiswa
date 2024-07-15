@@ -28,7 +28,7 @@
                                         {!! $userProfile->massage ?? 'no desc' !!}
                                     </div>
                                     <div class="mt-3 text-xs flex justify-end">
-                                        Informatika, 2000018160
+                                        Informatika, {{ $userProfile->nim }}
                                     </div>
                                 </div>
                             </div>
