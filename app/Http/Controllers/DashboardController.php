@@ -155,9 +155,9 @@ class DashboardController extends Controller
     public function massagePost(Request $request)
     {
         $request->validate([
-            'massage' => ['nullable', 'max:500']
+            'massage' => ['nullable', 'max:5000']
         ], [
-            'massage.max' => 'panjang karakter tidak boleh lebih dari 500'
+            'massage.max' => 'panjang karakter tidak boleh lebih dari 5000'
         ]);
 
         try {

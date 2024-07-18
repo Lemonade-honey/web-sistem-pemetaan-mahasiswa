@@ -33,3 +33,13 @@
     height: 32px;
     width: 33px;
 }
+
+/* ck editor */
+
+blockquote {
+    @apply p-4 border-s-4 border-gray-300 bg-gray-50;
+}
+
+blockquote p{
+    @apply italic font-medium leading-relaxed text-gray-900;
+}
