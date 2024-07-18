@@ -43,6 +43,9 @@
                     <a href="{{ route('home') }}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-golden-700 md:p-0">Home</a>
                 </li>
                 <li>
+                    <a href="{{ route('badge') }}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-golden-700 md:p-0">Badge</a>
+                </li>
+                <li>
                     <a href="{{ route('mahasiswa-list') }}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-golden-700 md:p-0">Mahasiswa</a>
                 </li>
                 @guest

@@ -21,6 +21,8 @@ Route::prefix('/mahasiswa')->group(function(){
     Route::get('/detail/{uuid}', [MahasiswaController::class, 'detail'])->name('mahasiswa-detail');
 });
 
+Route::view('/badge', 'badge')->name('badge');
+
 Route::middleware('auth')->group(function(){
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
