@@ -62,7 +62,7 @@
             <div class="w-full p-4 border border-gray-300 shadow rounded-lg">
                 <div class="">
                     <h3 class="text-lg font-medium uppercase mb-2">Apa Tujuan Sistem Ini ?</h3>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus voluptates eius, delectus a non optio.</p>
+                    <p>Tujuan utama sistem ini dibuat untuk memetakan kompetisi dan kemampuan yang diperoleh mahasiswa selama masa kuliah, serta mempermudah orang lain untuk melihat kemampuan tersebut </p>
                 </div>
             </div>
             <div class="w-full p-4 border border-gray-300 shadow rounded-lg">
