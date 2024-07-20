@@ -1,6 +1,6 @@
 <div>
-    <div class="flex flex-wrap justify-between gap-4 mb-2">
-        <div class="sm:flex w-full sm:w-3/12 items-center gap-3">
+    <div class="flex flex-wrap justify-end gap-4 mb-2">
+        {{-- <div class="sm:flex w-full sm:w-3/12 items-center gap-3">
             <p class="text-sm">Filter Type</p>
             <div class="flex">
                 <select wire:model.change="filterBadge" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-golden-500 focus:border-golden-500 block w-full p-2.5 capitalize">
@@ -9,7 +9,7 @@
                     <option value="cyber crime analysis">cyber crime analysis</option>
                 </select>
             </div>
-        </div>
+        </div> --}}
         <div class="w-full sm:w-3/12">
             <input type="search" wire:model.live.debounce.400ms="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-golden-500 focus:border-golden-500 block w-full p-2.5" placeholder="Search...">
         </div>
