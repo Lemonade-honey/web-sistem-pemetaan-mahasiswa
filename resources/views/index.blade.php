@@ -3,8 +3,8 @@
 @section('body')
 <main class="">
     <section class="w-full flex justify-around items-center flex-wrap gap-5 sm:min-h-dvh sm:mt-0" id="home">
-        <div class="w-full lg:w-3/6">
-            <img src="https://static.vecteezy.com/system/resources/previews/010/974/056/original/3d-courier-service-delivery-delivery-man-and-boxes-courier-or-delivery-service-men-characters-with-parcels-packages-boxes-3d-rendering-png.png" alt="">
+        <div class="w-full sm:w-3/6">
+            <img src="{{ asset('assets/image/hero.gif') }}" alt="">
         </div>
         <header class="max-w-xl text-center sm:text-left">
             <h1 class="text-gray-700 text-5xl mb-4 font-medium">Sistem Pemetaan <span class="text-golden-600">Mahasiswa</span></h1>
@@ -61,12 +61,6 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <div class="w-full p-4 border border-gray-300 shadow rounded-lg">
                 <div class="">
-                    <h3 class="text-lg font-medium uppercase mb-2">Apa Kegunaan Sistem Ini ?</h3>
-                    <p>Untuk memetakan mahasiswa</p>
-                </div>
-            </div>
-            <div class="w-full p-4 border border-gray-300 shadow rounded-lg">
-                <div class="">
                     <h3 class="text-lg font-medium uppercase mb-2">Apa Tujuan Sistem Ini ?</h3>
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus voluptates eius, delectus a non optio.</p>
                 </div>
@@ -80,13 +74,7 @@
             <div class="w-full p-4 border border-gray-300 shadow rounded-lg">
                 <div class="">
                     <h3 class="text-lg font-medium uppercase mb-2">apa itu badge ?</h3>
-                    <p></p>
-                </div>
-            </div>
-            <div class="w-full p-4 border border-gray-300 shadow-yellow-50 rounded-lg">
-                <div class="">
-                    <h3 class="text-lg font-medium uppercase mb-2">Lorem, ipsum dolor.</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, sit?</p>
+                    <p>Dapat diangap sebagai sebuah kemampuan yang diharapkan telah diperoleh, setelah mengambil matakuliah-matakuliah tertentu</p>
                 </div>
             </div>
         </div>
