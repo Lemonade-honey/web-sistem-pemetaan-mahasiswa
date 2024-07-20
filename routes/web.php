@@ -23,6 +23,12 @@ Route::prefix('/mahasiswa')->group(function(){
 
 Route::view('/badge', 'badge')->name('badge');
 
+Route::get('/view/file/{uuid}', function($uuid){
+    $file = \App\Models\UserFile::where('uuid', $uuid)->first();
+
+    return view('file-detail', compact('file'));
+})->name('file.view');
+
 Route::middleware('auth')->group(function(){
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -40,4 +46,4 @@ Route::middleware('auth')->group(function(){
 
 
 // test route
-Route::get('/test', [DashboardController::class, 'test']);
+Route::view("/test", "file-detail");

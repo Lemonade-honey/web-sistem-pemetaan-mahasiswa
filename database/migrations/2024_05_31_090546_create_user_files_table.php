@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('user_files', function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->foreignId('user_id');
+            $table->string('title');
             $table->text("path");
             $table->text("file");
             $table->text("scores")->nullable();

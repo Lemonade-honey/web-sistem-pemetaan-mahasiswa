@@ -312,7 +312,7 @@
                     </div>
                     <div class="">
                         <label for="aspek" class="block mb-2 text-sm font-medium text-gray-900">Ringkasan (max 300 word)</label>
-                        <textarea name="details" id="editor" cols="30" rows="10">{{ old('details') }}</textarea>
+                        <textarea name="desc" id="editor" cols="30" rows="10">{{ old('desc') }}</textarea>
                     </div>
                 </div>
                 <!-- Modal footer -->

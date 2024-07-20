@@ -74,6 +74,7 @@ class DashboardController extends Controller
             else
             {
                 UserFile::create([
+                    "title" => $request->input("title"),
                     "user_id" => auth()->user()->id,
                     "path" => $filePath,
                     "file" => substr($filePath, 8),
@@ -200,6 +201,7 @@ class DashboardController extends Controller
             return back()->with('error', 'file gagal dihapus');
         } catch(\Throwable $th)
         {
+            Log::error('error delete file', [$th]);
             \Illuminate\Support\Facades\DB::rollBack();
             return back()->with('error', 'server errors');
         }

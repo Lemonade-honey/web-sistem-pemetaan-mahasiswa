@@ -49,7 +49,9 @@
                         {{ ($userFiles->currentPage() - 1) * $userFiles->perPage() + $key + 1 }}
                     </td>
                     <th scope="row" class="px-6 py-4 whitespace-nowrap">
-                        <a href="{{ env('CLASSIFICATION_CONNECTION') . 'library?folder_path=' . $item->path }}" target="__blank" class="text-golden-700 hover:underline">{{ strlen($item->file) > 55 ? substr($item->file, 0, 50) . '...' : $item->file}}</a>
+
+                        <p class="text-base">{{ strlen($item->title) > 50 ? substr($item->title, 0, 50) . '...' : $item->title }}</p>
+                        <a href="{{ env('CLASSIFICATION_CONNECTION') . 'library?folder_path=' . $item->path }}" target="__blank" class="text-golden-700 text-sm hover:underline">{{ strlen($item->file) > 25 ? substr($item->file, 0, 25) . '...' : $item->file}}</a>
 
                         <p>{{ $item->created_at->diffForHumans() }}</p>
                     </th>
@@ -73,9 +75,10 @@
                         {{ $item->type }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ strlen($item->ringkasan) > 100 ? substr($item->ringkasan, 0, 100) . '...' : $item->ringkasan}}
+                        {{ strip_tags(strlen($item->ringkasan) > 100 ? substr($item->ringkasan, 0, 100) . '...' : $item->ringkasan)}}
                     </td>
                     <td class="px-6 py-4 text-right">
+                        <a href="{{ route('file.view', ['uuid' => $item->uuid]) }}" class="font-medium text-blue-600 hover:underline">View</a>
                         <a href="{{ route('delete.file', ['id' => $item->id]) }}" class="font-medium text-red-600 hover:underline">Delete</a>
                     </td>
                 </tr>
